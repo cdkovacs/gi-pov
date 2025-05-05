@@ -58,26 +58,53 @@ jobs:
             collections: true
           EOL
 
-      - name: Create index page
+      - name: Create index page if it doesn't exist
         run: |
-          cat > index.md << EOL
-          ---
-          layout: default
-          title: GitHub/IBM POV Documents
-          ---
+          if [ ! -f "index.md" ]; then
+            cat > index.md << EOL
+            ---
+            layout: default
+            title: GitHub/IBM POV Documents
+            ---
 
-          # GitHub/IBM POV Documents
+            # GitHub/IBM POV Documents
 
-          This site contains technical point of view documents for GitHub and IBM.
+            This site contains technical point of view documents for GitHub and IBM.
 
-          ## Available Documents
+            ## Available Documents
 
-          - [GitHub Organization Design (GI-POV-1)](gi-pov-1.html)
-          - [Branching Strategies (GI-POV-2)](gi-pov-2.html)
-          EOL
+            - [GitHub Organization Design (GI-POV-1)](gi-pov-1.html)
+            - [Branching Strategies (GI-POV-2)](gi-pov-2.html)
+            EOL
+          fi
+
+      - name: Ensure Markdown files have front matter
+        run: |
+          for file in *.md; do
+            if [ "$file" != "index.md" ] && [ -f "$file" ]; then
+              # Check if file already has front matter
+              if ! grep -q "^---" "$file"; then
+                # Add front matter to the beginning of the file
+                tmp=$(mktemp)
+                echo "---" > "$tmp"
+                echo "layout: default" >> "$tmp"
+                echo "title: $(basename "$file" .md)" >> "$tmp"
+                echo "---" >> "$tmp"
+                cat "$file" >> "$tmp"
+                mv "$tmp" "$file"
+                echo "Added front matter to $file"
+              fi
+            fi
+          done
+
+      - name: List all files before build
+        run: ls -la
 
       - name: Build with Jekyll
-        run: bundle exec jekyll build
+        run: |
+          bundle exec jekyll build --trace
+          echo "Jekyll build completed"
+          ls -la _site
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3 # Updated from v2

@@ -7,11 +7,20 @@ kramdown:
   syntax_highlighter: rouge
 plugins:
   - jekyll-relative-links
+  - jekyll-seo-tag
 relative_links:
   enabled: true
   collections: true
+include:
+  - "*.md"
 exclude:
   - Gemfile
   - Gemfile.lock
   - .github/
   - README.md
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
