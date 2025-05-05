@@ -1,0 +1,87 @@
+name: Publish Markdown to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # or master, depending on your default branch name
+    paths:
+      - '**.md'  # Only trigger on changes to Markdown files
+      - '.github/workflows/publish-markdown.yml'  # Also trigger on workflow changes
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Install Jekyll
+        run: |
+          gem install jekyll bundler
+          bundle init
+          bundle add jekyll --version "~>4.3.2"
+          bundle add webrick
+
+      - name: Create Jekyll configuration
+        run: |
+          cat > _config.yml << EOL
+          title: GitHub/IBM POV Documents
+          description: Technical point of view documents for GitHub and IBM
+          theme: jekyll-theme-cayman
+          markdown: kramdown
+          kramdown:
+            input: GFM
+            syntax_highlighter: rouge
+          plugins:
+            - jekyll-relative-links
+          relative_links:
+            enabled: true
+            collections: true
+          EOL
+
+      - name: Create index page
+        run: |
+          cat > index.md << EOL
+          ---
+          layout: default
+          title: GitHub/IBM POV Documents
+          ---
+
+          # GitHub/IBM POV Documents
+
+          This site contains technical point of view documents for GitHub and IBM.
+
+          ## Available Documents
+
+          - [GitHub Organization Design (GI-POV-1)](gi-pov-1.html)
+          - [Branching Strategies (GI-POV-2)](gi-pov-2.html)
+          EOL
+
+      - name: Build with Jekyll
+        run: bundle exec jekyll build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: '_site'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+
+      - name: Output Pages URL
+        run: echo "Your site is published at ${{ steps.deployment.outputs.page_url }}"
