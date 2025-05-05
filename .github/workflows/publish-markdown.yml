@@ -39,10 +39,11 @@ jobs:
           bundle add webrick
           bundle add jekyll-theme-cayman --version "~> 0.2.0"
           bundle add jekyll-relative-links --version "~> 0.7.0"
+          bundle add jekyll-seo-tag --version "~> 2.8.0"
 
       - name: Create Jekyll configuration
         run: |
-          cat > _config.yml << EOL
+          cat > _config.yml << 'EOF'
           title: GitHub/IBM POV Documents
           description: Technical point of view documents for GitHub and IBM
           theme: jekyll-theme-cayman
@@ -56,12 +57,20 @@ jobs:
           relative_links:
             enabled: true
             collections: true
-          EOL
+          include:
+            - "*.md"
+          defaults:
+            - scope:
+                path: ""
+                type: "pages"
+              values:
+                layout: "default"
+          EOF
 
       - name: Create index page if it doesn't exist
         run: |
           if [ ! -f "index.md" ]; then
-            cat > index.md << EOL
+            cat > index.md << 'EOF'
             ---
             layout: default
             title: GitHub/IBM POV Documents
@@ -75,27 +84,35 @@ jobs:
 
             - [GitHub Organization Design (GI-POV-1)](gi-pov-1.html)
             - [Branching Strategies (GI-POV-2)](gi-pov-2.html)
-            EOL
+            EOF
           fi
 
       - name: Ensure Markdown files have front matter
         run: |
+          shopt -s nullglob
           for file in *.md; do
-            if [ "$file" != "index.md" ] && [ -f "$file" ]; then
+            if [ "$file" != "index.md" ] && [ "$file" != "README.md" ] && [ -f "$file" ]; then
+              echo "Processing $file"
               # Check if file already has front matter
               if ! grep -q "^---" "$file"; then
+                echo "Adding front matter to $file"
                 # Add front matter to the beginning of the file
                 tmp=$(mktemp)
                 echo "---" > "$tmp"
                 echo "layout: default" >> "$tmp"
-                echo "title: $(basename "$file" .md)" >> "$tmp"
+                title=$(basename "$file" .md | sed 's/-/ /g' | sed 's/\b\(.\)/\u\1/g')
+                echo "title: $title" >> "$tmp"
                 echo "---" >> "$tmp"
+                echo "" >> "$tmp"  # Add an empty line for better formatting
                 cat "$file" >> "$tmp"
                 mv "$tmp" "$file"
                 echo "Added front matter to $file"
+              else
+                echo "$file already has front matter"
               fi
             fi
           done
+          shopt -u nullglob
 
       - name: List all files before build
         run: ls -la
