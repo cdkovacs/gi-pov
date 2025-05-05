@@ -36,7 +36,7 @@ Trunk-Based Development is a branching strategy where developers collaborate on 
 
 <div align="center">
 
-![Trunk-Based Development](https://trunkbaseddevelopment.com/trunk1b.png)
+![Trunk-Based Development - source https://trunkbaseddevelopment.com/trunk1b.png](images/trunk1b.png)
 
 </div>
 
@@ -115,7 +115,7 @@ Git Flow is a robust branching model that defines specific branch types and thei
 - Release and hotfix branches merge into both main/master and develop to ensure changes are not lost.
 
 <div align="center">
-<img src="https://nvie.com/img/git-model@2x.png" alt="Git Flow" width="600" />
+<img src="https://nvie.com/img/git-model@2x.png" alt="Git Flow - source nvie.com" width="600" />
 </div>
 
 ### Required Release Management Practices
