@@ -7,6 +7,7 @@ on:
     paths:
       - '**.md'  # Only trigger on changes to Markdown files
       - '.github/workflows/publish-markdown.yml'  # Also trigger on workflow changes
+  workflow_dispatch: # Allow manual triggering
 
 jobs:
   build-and-deploy:
@@ -18,22 +19,23 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # Updated from v3
 
       - name: Setup Pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v4 # Updated from v3
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2'
+          ruby-version: '3.3' # Updated to latest stable Ruby
           bundler-cache: true
+          cache-version: 1 # To ensure cache invalidation when needed
 
       - name: Install Jekyll
         run: |
           gem install jekyll bundler
           bundle init
-          bundle add jekyll --version "~>4.3.2"
+          bundle add jekyll --version "~>4.3.3" # Updated to latest Jekyll
           bundle add webrick
 
       - name: Create Jekyll configuration
@@ -48,6 +50,7 @@ jobs:
             syntax_highlighter: rouge
           plugins:
             - jekyll-relative-links
+            - jekyll-seo-tag
           relative_links:
             enabled: true
             collections: true
@@ -75,13 +78,13 @@ jobs:
         run: bundle exec jekyll build
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3 # Updated from v2
         with:
           path: '_site'
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4 # Updated from v2
 
       - name: Output Pages URL
         run: echo "Your site is published at ${{ steps.deployment.outputs.page_url }}"
