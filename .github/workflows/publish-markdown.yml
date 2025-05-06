@@ -37,7 +37,7 @@ jobs:
           bundle init
           bundle add jekyll --version "~>4.3.3" # Updated to latest Jekyll
           bundle add webrick
-          bundle add jekyll-theme-cayman --version "~> 0.2.0"
+          bundle add minima
           bundle add jekyll-relative-links --version "~> 0.7.0"
           bundle add jekyll-seo-tag --version "~> 2.8.0"
 

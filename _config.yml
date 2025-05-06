@@ -1,6 +1,6 @@
 title: GitHub/IBM POV Documents
 description: Technical point of view documents from IBM related to GitHub best practices
-theme: jekyll-theme-cayman
+theme: minima
 markdown: kramdown
 kramdown:
   input: GFM
