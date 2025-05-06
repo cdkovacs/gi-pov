@@ -1,5 +1,5 @@
 title: GitHub/IBM POV Documents
-description: Technical point of view documents for GitHub and IBM
+description: Technical point of view documents from IBM related to GitHub best practices
 theme: jekyll-theme-cayman
 markdown: kramdown
 kramdown:
@@ -12,7 +12,7 @@ relative_links:
   enabled: true
   collections: true
 include:
-  - "*.md"
+  - "**/*.md"
 exclude:
   - Gemfile
   - Gemfile.lock
@@ -24,3 +24,9 @@ defaults:
       type: "pages"
     values:
       layout: "default"
+  - scope:
+      path: "gi-pov-2-assets"
+      type: "pages"
+    values:
+      layout: "default"
+      permalink: /:path/:basename:output_ext
