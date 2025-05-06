@@ -9,7 +9,7 @@ Version: 1.0
 
 Branching strategies are essential frameworks that guide how development teams collaborate on code changes within version control systems. They define how code flows from development to production and significantly impact a team's ability to deliver software efficiently, safely, and predictably. The choice of branching strategy affects release cadence, code quality, and the team's ability to respond to production issues.
 
-This document examines three prominent branching strategies: [Trunk-Based Development](https://trunkbaseddevelopment.com/5-min-overview/), Branch-for-Release, and Git Flow—and discusses the release management practices necessary for their successful implementation. Each strategy offers distinct advantages and challenges, making them suitable for different team sizes, release cadences, and organizational contexts. Additionally, this document explores how feature flags, parallel change patterns, and versioning approaches can complement these branching strategies to enhance deployment safety and flexibility.
+This document examines three prominent branching strategies: [Trunk-Based Development](https://trunkbaseddevelopment.com/5-min-overview/), Branch-for-Release, and Git Flow—and discusses the release management practices necessary for their successful implementation. Each strategy offers distinct advantages and challenges, making them suitable for different team sizes, release cadences, and organizational contexts. Additionally, the references listed in this document explore how [feature flags](./gi-pov-2-assets/feature-flag.md), [parallel change](./gi-pov-2-assets/parallel-change.md) patterns, and [versioning](./gi-pov-2-assets/versioning-and-convential-commits.md) approaches can complement these branching strategies to enhance deployment safety and flexibility.
 
 Selecting the appropriate branching strategy is a critical architectural decision that should align with an organization's development culture, release requirements, and operational capabilities. This document aims to provide guidance for making informed decisions about which branching strategy to adopt and how to implement it effectively.
 
@@ -43,7 +43,7 @@ Selecting the appropriate branching strategy is a critical architectural decisio
 ### Required Release Management Practices
 
 1. **Robust automated testing.** Comprehensive test suites must run on every commit to ensure the trunk remains stable.
-2. **Feature flags.** Use feature flags (like those provided by LaunchDarkly) to hide incomplete features in production until they're ready, allowing code to be merged to trunk before features are complete.
+2. **Feature flags.** Use [feature flags](./gi-pov-2-assets/feature-flag.md)  (like those provided by LaunchDarkly) to hide incomplete features in production until they're ready, allowing code to be merged to trunk before features are complete.
 3. **Continuous deployment pipeline.** Implement a reliable CI/CD pipeline that can quickly deploy changes to production.
 4. **Monitoring and observability.** Robust monitoring systems must be in place to quickly detect and address issues in production.
 5. **Branch by abstraction.** For larger changes, use the branch by abstraction technique to make significant architectural changes without long-lived branches.
@@ -60,8 +60,8 @@ Selecting the appropriate branching strategy is a critical architectural decisio
 
 - **Requires disciplined development practices.** Developers must ensure their changes don't break the trunk.
 - **May be challenging for less experienced teams.** The approach requires strong testing and collaboration skills.
-- **Feature flags add complexity.** Managing feature flags introduces additional complexity to the codebase.
-- **Potential for incomplete features in production.** Even with feature flags, incomplete code exists in the production codebase.
+- **Feature flags add complexity.** Managing [feature flags](./gi-pov-2-assets/feature-flag.md) introduces additional complexity to the codebase.
+- **Potential for incomplete features in production.** Even with [feature flags](./gi-pov-2-assets/feature-flag.md), incomplete code exists in the production codebase.
 
 ### Alternative - GitHub Flow
 
