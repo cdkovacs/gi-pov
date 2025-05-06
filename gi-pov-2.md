@@ -34,7 +34,7 @@ Selecting the appropriate branching strategy is a critical architectural decisio
 - The trunk is kept in a releasable state at all times.
 - Releases can be made directly from the trunk or through dedicated release branches.
 
-<div align="center">
+<div align="center" style="background-color: white; padding: 20px;">
 
 ![Trunk-Based Development - source https://trunkbaseddevelopment.com/trunk1b.png](images/trunk1b.png)
 
@@ -69,20 +69,16 @@ Selecting the appropriate branching strategy is a critical architectural decisio
 
 In standard GitHub flow, code is merged from a feature branch to trunk (main) after a build has been completed and a release is generated. Releasing _after_ a merge to trunk has been completed aligns this approach to trunk-based development. 
 
-<div align="center">
-  <div style="background-color: white; display: inline-block; padding: 20px;">
+<div align="center" style="background-color: white; padding: 20px;">
     <img src="images/githubflow1.png" alt="GitHub Flow - source https://trunkbaseddevelopment.com/alternative-branching-models/githubflow1.png">
-  </div>
 </div>
 
 ## 2. Branch-for-Release
 
 [Branch-for-Release](https://trunkbaseddevelopment.com/branch-for-release/) is a strategy where development occurs on the main branch, and release branches are created just before a release. These branches are used for final stabilization and bug fixes specific to the release.
 
-<div align="center">
-  <div style="background-color: white; display: inline-block; padding: 20px;">
+<div align="center" style="background-color: white; padding: 20px;">
     <img src="images/branch_for_release.png" alt="Branch-for-release - source https://trunkbaseddevelopment.com/branch-for-release/branch_for_release.png">
-  </div>
 </div>
 
 ### Workflow
@@ -128,7 +124,7 @@ Git Flow is a robust branching model that defines specific branch types and thei
 - **Hotfix branches** branch off from main/master to quickly address critical production issues.
 - Release and hotfix branches merge into both main/master and develop to ensure changes are not lost.
 
-<div align="center">
+<div align="center" style="background-color: white; padding: 20px;">
 <img src="https://nvie.com/img/git-model@2x.png" alt="Git Flow - source nvie.com" width="600" />
 </div>
 
