@@ -43,3 +43,9 @@ When combined with SemVer, Conventional Commits can automate version increments:
 - Commits with a `BREAKING CHANGE:` footer trigger a MAJOR version increment
 
 This approach integrates well with CI/CD pipelines and reduces the manual effort required for release management.
+
+# References and Additional Reading
+
+- [Semantic Versioning Specification](https://semver.org/)  
+- [Romantic Versioning Specification](https://github.com/romversioning/romver)  
+- [Conventional Commits Specification](https://www.conventionalcommits.org/)  

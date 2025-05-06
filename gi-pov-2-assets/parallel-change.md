@@ -15,3 +15,7 @@ The Parallel Change pattern (also known as Expand and Contract) provides a way t
 - **Supports continuous delivery.** The system remains operational throughout the change process.
 - **Facilitates large-scale refactoring.** Complex architectural changes can be implemented without disrupting development.
 
+# References and Additional Reading
+
+- [Parallel Change Pattern](https://martinfowler.com/bliki/ParallelChange.html)  
+- [Expand and Contract Pattern](https://www.tim-wellhausen.de/papers/ExpandAndContract/ExpandAndContract.html)  

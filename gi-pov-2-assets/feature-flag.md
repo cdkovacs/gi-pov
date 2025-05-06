@@ -19,3 +19,8 @@ LaunchDarkly provides a comprehensive feature flag management platform that enab
 3. **Default safe values.** Ensure that if flag evaluation fails, the system defaults to a safe state.
 4. **Testing with flags.** Test both flag states to ensure the system behaves correctly in all scenarios.
 5. **Documentation.** Maintain clear documentation of active flags and their purpose.
+
+# References and Additional Reading
+
+- [LaunchDarkly Feature Flag Platform](https://launchdarkly.com/)  
+- [Feature Toggles (Feature Flags)](https://martinfowler.com/articles/feature-toggles.html)  

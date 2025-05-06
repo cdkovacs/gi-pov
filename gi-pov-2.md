@@ -171,13 +171,9 @@ Git Flow is a robust branching model that defines specific branch types and thei
 
 # References and Additional Reading
 
-\- [Trunk-Based Development](https://trunkbaseddevelopment.com/)  
-\- [LaunchDarkly Feature Flag Platform](https://launchdarkly.com/)  
-\- [Parallel Change Pattern](https://martinfowler.com/bliki/ParallelChange.html)  
-\- [Expand and Contract Pattern](https://www.tim-wellhausen.de/papers/ExpandAndContract/ExpandAndContract.html)  
-\- [Semantic Versioning Specification](https://semver.org/)  
-\- [Romantic Versioning Specification](https://github.com/romversioning/romver)  
-\- [Conventional Commits Specification](https://www.conventionalcommits.org/)  
-\- [Git Flow Original Article](https://nvie.com/posts/a-successful-git-branching-model/)  
-\- [Feature Toggles (Feature Flags)](https://martinfowler.com/articles/feature-toggles.html)  
-\- [Branch by Abstraction](https://martinfowler.com/bliki/BranchByAbstraction.html)
+- [Trunk-Based Development](https://trunkbaseddevelopment.com/)  
+- [Git Flow Original Article](https://nvie.com/posts/a-successful-git-branching-model/)  
+- [Branch by Abstraction](https://martinfowler.com/bliki/BranchByAbstraction.html) 
+- [Feature Flags](./gi-pov-2-assets/feature-flag.md) 
+- [Parallel Change Pattern](./gi-pov-2-assets/parallel-change.md) 
+- [Versioning and Conventional Commits](./gi-pov-2-assets/versioning-and-convential-commits.md) 
