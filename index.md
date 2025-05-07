@@ -9,5 +9,5 @@ This site contains technical point of view documents from IBM related to GitHub 
 
 ## Available Documents
 
-- [GitHub Organization Design (GI-POV-1)](gi-pov-1.html)
-- [Branching Strategies (GI-POV-2)](gi-pov-2.html)
+- [GitHub Organization Design](organization-design.html)
+- [Branching Strategies](branching-strategies.html)

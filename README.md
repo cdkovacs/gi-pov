@@ -4,8 +4,8 @@ This repository contains technical point of view (POV) documents for GitHub and 
 
 ## Available Documents
 
-- [GitHub Organization Design (GI-POV-1)](gi-pov-1.md)
-- [Branching Strategies (GI-POV-2)](gi-pov-2.md)
+- [GitHub Organization Design](organization-design.md)
+- [Branching Strategies](branching-strategies.md)
 
 ## GitHub Pages Publication
 

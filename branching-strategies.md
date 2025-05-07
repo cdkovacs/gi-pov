@@ -1,4 +1,4 @@
-GitHub/IBM POV-2 (GI-POV-2)  
+GitHub/IBM POV  
 Branching Strategies
 
 Prepared by: Christopher Kovacs  
@@ -9,7 +9,7 @@ Version: 1.0
 
 Branching strategies are essential frameworks that guide how development teams collaborate on code changes within version control systems. They define how code flows from development to production and significantly impact a team's ability to deliver software efficiently, safely, and predictably. The choice of branching strategy affects release cadence, code quality, and the team's ability to respond to production issues.
 
-This document examines three prominent branching strategies: [Trunk-Based Development](https://trunkbaseddevelopment.com/5-min-overview/), Branch-for-Release, and Git Flow—and discusses the release management practices necessary for their successful implementation. Each strategy offers distinct advantages and challenges, making them suitable for different team sizes, release cadences, and organizational contexts. Additionally, the references listed in this document explore how [feature flags](./gi-pov-2-assets/feature-flag.md), [parallel change](./gi-pov-2-assets/parallel-change.md) patterns, and [versioning](./gi-pov-2-assets/versioning-and-convential-commits.md) approaches can complement these branching strategies to enhance deployment safety and flexibility.
+This document examines three prominent branching strategies: [Trunk-Based Development](https://trunkbaseddevelopment.com/5-min-overview/), Branch-for-Release, and Git Flow—and discusses the release management practices necessary for their successful implementation. Each strategy offers distinct advantages and challenges, making them suitable for different team sizes, release cadences, and organizational contexts. Additionally, the references listed in this document explore how [feature flags](./branching-strategies-assets/feature-flag.md), [parallel change](./branching-strategies-assets/parallel-change.md) patterns, and [versioning](./branching-strategies-assets/versioning-and-convential-commits.md) approaches can complement these branching strategies to enhance deployment safety and flexibility.
 
 Selecting the appropriate branching strategy is a critical architectural decision that should align with an organization's development culture, release requirements, and operational capabilities. This document aims to provide guidance for making informed decisions about which branching strategy to adopt and how to implement it effectively.
 
@@ -43,7 +43,7 @@ Selecting the appropriate branching strategy is a critical architectural decisio
 ### Required Release Management Practices
 
 1. **Robust automated testing.** Comprehensive test suites must run on every commit to ensure the trunk remains stable.
-2. **Feature flags.** Use [feature flags](./gi-pov-2-assets/feature-flag.md)  (like those provided by LaunchDarkly) to hide incomplete features in production until they're ready, allowing code to be merged to trunk before features are complete.
+2. **Feature flags.** Use [feature flags](./branching-strategies-assets/feature-flag.md)  (like those provided by LaunchDarkly) to hide incomplete features in production until they're ready, allowing code to be merged to trunk before features are complete.
 3. **Continuous deployment pipeline.** Implement a reliable CI/CD pipeline that can quickly deploy changes to production.
 4. **Monitoring and observability.** Robust monitoring systems must be in place to quickly detect and address issues in production.
 5. **Branch by abstraction.** For larger changes, use the branch by abstraction technique to make significant architectural changes without long-lived branches.
@@ -60,8 +60,8 @@ Selecting the appropriate branching strategy is a critical architectural decisio
 
 - **Requires disciplined development practices.** Developers must ensure their changes don't break the trunk.
 - **May be challenging for less experienced teams.** The approach requires strong testing and collaboration skills.
-- **Feature flags add complexity.** Managing [feature flags](./gi-pov-2-assets/feature-flag.md) introduces additional complexity to the codebase.
-- **Potential for incomplete features in production.** Even with [feature flags](./gi-pov-2-assets/feature-flag.md), incomplete code exists in the production codebase.
+- **Feature flags add complexity.** Managing [feature flags](./branching-strategies-assets/feature-flag.md) introduces additional complexity to the codebase.
+- **Potential for incomplete features in production.** Even with [feature flags](./branching-strategies-assets/feature-flag.md), incomplete code exists in the production codebase.
 
 ### Alternative - GitHub Flow
 
@@ -159,17 +159,17 @@ Git Flow is a robust branching model that defines specific branch types and thei
 | 1 | Prefer [Trunk-Based Development](https://trunkbaseddevelopment.com/) (or GitHub Flow) for teams practicing continuous delivery | Trunk-Based Development aligns naturally with continuous delivery practices, enabling frequent, small releases and reducing integration issues.|
 | 2 | Implement [Branch-for-Release](https://trunkbaseddevelopment.com/branch-for-release/) for products with defined release cycles | Branch-for-Release provides stability for planned releases while allowing development to continue, making it suitable for products with scheduled releases. |
 | 3 | Consider [Git Flow](https://trunkbaseddevelopment.com/alternative-branching-models/#gitflow-and-similar) for complex products with scheduled releases | Git Flow provides a structured framework for managing complex products with multiple versions and scheduled releases, though it comes with significant additional overhead and significant risk of merge conflicts. |
-| 4 | Integrate [feature flags](./gi-pov-2-assets/feature-flag.md) regardless of branching strategy | Feature flags decouple deployment from release, enhancing safety and flexibility for all branching strategies. |
-| 5 | Use the [Parallel Change pattern](./gi-pov-2-assets/parallel-change.md) for breaking changes | This pattern enables safe implementation of breaking changes without long-lived branches, supporting continuous delivery. |
-| 6 | Adopt [SemVer or RomVer](./gi-pov-2-assets/versioning-and-convential-commits.md) for APIs and libraries | SemVer/RomVer communicates the nature of changes clearly to consumers, making it ideal for APIs and libraries. |
-| 7 | Consider [CalVer](./gi-pov-2-assets/versioning-and-convential-commits.md) for rapidly evolving products | CalVer works well for products with frequent releases where the timing of releases is more relevant than the nature of changes. |
-| 8 | Implement [Conventional Commits](./gi-pov-2-assets/versioning-and-convential-commits.md) for automated versioning | Conventional Commits reduces manual effort in version management and changelog generation, improving consistency and efficiency. |
+| 4 | Integrate [feature flags](./branching-strategies-assets/feature-flag.md) regardless of branching strategy | Feature flags decouple deployment from release, enhancing safety and flexibility for all branching strategies. |
+| 5 | Use the [Parallel Change pattern](./branching-strategies-assets/parallel-change.md) for breaking changes | This pattern enables safe implementation of breaking changes without long-lived branches, supporting continuous delivery. |
+| 6 | Adopt [SemVer or RomVer](./branching-strategies-assets/versioning-and-convential-commits.md) for APIs and libraries | SemVer/RomVer communicates the nature of changes clearly to consumers, making it ideal for APIs and libraries. |
+| 7 | Consider [CalVer](./branching-strategies-assets/versioning-and-convential-commits.md) for rapidly evolving products | CalVer works well for products with frequent releases where the timing of releases is more relevant than the nature of changes. |
+| 8 | Implement [Conventional Commits](./branching-strategies-assets/versioning-and-convential-commits.md) for automated versioning | Conventional Commits reduces manual effort in version management and changelog generation, improving consistency and efficiency. |
 
 # References and Additional Reading
 
 - [Trunk-Based Development](https://trunkbaseddevelopment.com/)  
 - [Git Flow Original Article](https://nvie.com/posts/a-successful-git-branching-model/)  
 - [Branch by Abstraction](https://martinfowler.com/bliki/BranchByAbstraction.html) 
-- [Feature Flags](./gi-pov-2-assets/feature-flag.md) 
-- [Parallel Change Pattern](./gi-pov-2-assets/parallel-change.md) 
-- [Versioning and Conventional Commits](./gi-pov-2-assets/versioning-and-convential-commits.md) 
+- [Feature Flags](./branching-strategies-assets/feature-flag.md) 
+- [Parallel Change Pattern](./branching-strategies-assets/parallel-change.md) 
+- [Versioning and Conventional Commits](./branching-strategies-assets/versioning-and-convential-commits.md)

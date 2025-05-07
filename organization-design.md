@@ -1,4 +1,4 @@
-GitHub/IBM POV-1 (GI-POV-1)  
+GitHub/IBM POV  
 GitHub Organization Design
 
 Prepared by: Christopher Kovacs  
