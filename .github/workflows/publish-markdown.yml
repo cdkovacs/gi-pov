@@ -68,6 +68,29 @@ jobs:
           done
           shopt -u globstar nullglob
 
+      - name: Configure baseurl based on repository
+        run: |
+          # Get the repository name from GitHub context
+          REPO_NAME="${GITHUB_REPOSITORY#*/}"
+          OWNER="${GITHUB_REPOSITORY_OWNER}"
+          
+          echo "Repository: $REPO_NAME, Owner: $OWNER"
+          
+          # Check if this is an EMU account (typically has a suffix like _corp or similar)
+          if [[ "$OWNER" == *"_"* ]] || [[ "$OWNER" == *"-"* ]]; then
+            echo "Detected Enterprise Managed User account"
+            # For EMU accounts, use empty baseurl
+            sed -i 's|^baseurl:.*$|baseurl: ""|' _config.yml
+          else
+            echo "Detected standard GitHub.com account"
+            # For github.com accounts, use /gi-pov
+            sed -i 's|^baseurl:.*$|baseurl: "/gi-pov"|' _config.yml
+          fi
+          
+          # Show the updated config
+          echo "Updated _config.yml:"
+          cat _config.yml
+
       - name: Build with Jekyll
         run: |
           bundle exec jekyll build --trace
