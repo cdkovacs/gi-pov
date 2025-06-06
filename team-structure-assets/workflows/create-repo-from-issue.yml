@@ -1,0 +1,77 @@
+name: Create Repository from Issue
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  create-repo:
+    if: |
+      contains(github.event.issue.labels.*.name, 'repo-request') &&
+      contains(github.event.issue.title, '[REPO REQUEST]')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Parse issue
+        id: parse
+        uses: onmax/issue-form-parser@v1.6
+        with:
+          issue_number: ${{ github.event.issue.number }}
+    
+      - name: Create app token
+        uses: actions/create-github-app-token@v1
+        id: generate-token
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+
+      - name: Show parsed data JSON
+        env:
+          parsed_data: ${{ steps.parse.outputs.payload }}
+        run: |
+          echo "$parsed_data"
+          echo "---"
+          echo "${{ github.event.issue.body }}"
+
+      - name: Parse issue output
+        run: |
+          echo "REPO_NAME=${{ fromJSON(steps.parse.outputs.payload)['Repository Name'] }}" >> $GITHUB_ENV
+          echo "TEMPLATE=${{ fromJSON(steps.parse.outputs.payload)['Template Repository'] }}" >> $GITHUB_ENV
+          echo "DESCRIPTION=${{ fromJSON(steps.parse.outputs.payload)['Repository Description'] }}" >> $GITHUB_ENV
+
+      - name: Create Repository
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ steps.generate-token.outputs.token }}
+          script: |
+            console.log("${{ github.repository_owner}}")
+            console.log("${{ env.TEMPLATE }}")
+            console.log("${{ env.REPO_NAME }}")
+            console.log("${{ env.DESCRIPTION }}")
+            await github.rest.repos.createUsingTemplate({
+              template_owner: "${{ github.repository_owner}}",
+              template_repo: "${{ env.TEMPLATE }}",
+              owner: "${{ github.repository_owner }}",
+              name: "${{ env.REPO_NAME }}",
+              description: "${{ env.DESCRIPTION }}",
+              private: true
+            });
+            // Add a comment to the issue
+            await github.rest.issues.createComment({
+              owner: "${{ github.repository_owner}}",
+              repo: "issue-ops-repo-mgmt",
+              issue_number: ${{ github.event.issue.number }},
+              body: `✅ Repository "${{ env.REPO_NAME }}" has been created successfully!\n\nYou can find it at: https://github.com/${{ github.repository_owner}}/${{ env.REPO_NAME }}`
+            });
+            
+            // Close the issue
+            await github.rest.issues.update({
+              owner: "${{ github.repository_owner}}",
+              repo: "issue-ops-repo-mgmt",
+              issue_number: ${{ github.event.issue.number }},
+              state: 'closed'
+            });

@@ -1,0 +1,51 @@
+name: Repository Creation Request
+description: Request a new repository to be created from a template
+title: "[REPO REQUEST] "
+labels: ["repo-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for requesting a new repository! Please fill out the form below.
+  - type: input
+    id: repo-name
+    attributes:
+      label: Repository Name
+      description: What should the new repository be named?
+      placeholder: my-new-repo
+    validations:
+      required: true
+  - type: dropdown
+    id: template
+    attributes:
+      label: Template Repository
+      description: Which template should be used as a base?
+      options:
+        - basic-node-template
+        - basic-python-template
+        - basic-java-template
+  - type: dropdown
+    id: gsi
+    attributes:
+      label: GSI
+      description: What GSI is this associated with?
+      options:
+        - aws
+        - dl2
+        - g1s
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Repository Description
+      description: Please provide a brief description of the repository's purpose
+      placeholder: This repository will be used for...
+    validations:
+      required: true
+  - type: textarea
+    id: additional-notes
+    attributes:
+      label: Additional Notes
+      description: Any additional information that might be helpful
+      placeholder: Optional additional context... 

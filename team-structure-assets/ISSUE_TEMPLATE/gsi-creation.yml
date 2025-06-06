@@ -1,0 +1,26 @@
+name: Repository Creation Request
+description: Request a new GSI application creation / registration
+title: "[New App / GSI Request] "
+labels: ["repo-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This form is used to apply for a new GSI registration. Please verify
+        that the GSI [is not already registered by using this link](https://check-gsi-registration).
+  - type: textarea
+    id: app-name
+    attributes:
+      label: Application Name
+      description: What is the purpose of the application?
+      placeholder: Describe the application purpose here...
+    validations:
+      required: true
+  - type: input
+    id: gsi-prefix
+    attributes:
+      label: GSI Prefix Identifier
+      description: What new three-letter prefix should be used for this GSI?
+      placeholder: ex. aws, dl2, g1s
+    validations:
+      required: true

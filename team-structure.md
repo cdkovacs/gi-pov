@@ -27,23 +27,37 @@ For example, all repositories dealing with the prefix `aws` would have the follo
   - `aws-cloud-a`
   - `aws-cloud-r`
 
-## 2. SCIM / Membership Management
-GitHub Teams should be [managed from an identity provider](https://docs.github.com/en/enterprise-cloud@latest/admin/managing-iam/provisioning-user-accounts-with-scim/managing-team-memberships-with-identity-provider-groups) using identity provider groups (ex. Microsoft Entra ID) and provisioned / updated automatically using SCIM. This means that all of the required teams as specified in [Team Naming Conventions](#1-team-naming-conventions) above must first exist in the corresponding IDP.
+
+
+## 2. Enterprise Identity Management
+Team synchronization and provisioning is beyond the scope of this document; however, teams and membership are managed via the Microsoft EntraID identity provider. See [Managing team synchronization for organizations in your enterprise](https://docs.github.com/en/enterprise-cloud@latest/admin/managing-iam/using-saml-for-enterprise-iam/managing-team-synchronization-for-organizations-in-your-enterprise) for more information.
 
 ## 3. Repository creation and provisioning
+The documentation in this section leverages [IssueOps](https://issue-ops.github.io/docs/) and [IssueForms](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository#creating-issue-forms). Once an internal developer portal is configured, it will take the place of IssueOps and IssueForms, and will orchestrate and be orchestrated by GitHub Actions directly. References to IssueOps and IssueForms in this recommendation will allow MUFG to immediately implement required self-service elements in a way that can be leveraged by internal developer portals. 
 
-### New Repository Creation
-Repositories can be managed / created through self-service options by leveraging [IssueOps](https://issue-ops.github.io/docs/) in a special admin request repository or via an internal developer portal. In either approach, automation is used to create initial repository state from a "Golden Path" template, GitHub team assignments, and initial topics. 
+### New Repository Creation request
+Repositories can be managed / created through self-service options by leveraging [IssueOps](https://issue-ops.github.io/docs/) in a special admin request repository or via an internal developer portal. In either approach, automation is used to create initial repository state from a "Golden Path" template, GitHub team assignments, and assign initial topics, including GSI, language, sensitivity, etc. 
+
+Use this [IssueForm template](./team-structure-assets/ISSUE_TEMPLATE/repo-creation.yml) and [GitHub action workflow](./team-structure-assets/workflows/create-repo-from-issue.yml) as a starting point to allow users to request creation of new repositories.  
+
+### New GSI Creation
+As application GSIs are required to be created prior to creating repositories, self-service automation must be used to request new GSIs. This [IssueForm template](./team-structure-assets/ISSUE_TEMPLATE/gsi-creation.yml) should be leveraged to update the yaml file that contains GSIs. This yaml file will be used as the source of truth for a [New Repository Creation request](#new-repository-creation-request).
+
+The GitHub action workflow configured to handle this IssueForm will leverage the [GitHub Team REST API](https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#create-a-team) to create teams as specified in the [Team Naming Conventions](#1-team-naming-conventions) section each time a new GSI is created. Membership in these teams will be managed by the configured [Enterprise Identity Management](#2-enterprise-identity-management) solution.
 
 ### Adding Repository Topics
 Repository [topics](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/classifying-your-repository-with-topics) enable easier discovery and grouping of repositories. While each repository should have no more than 20 topics, the following are recommended at a minumum:
-   - Application prefix (GSI, ex `aws`)
+   - Application prefix (GSI, ex `gsi-aws`)
    - Language (ex. `javascript`)
    - Role (ex. `front-end`)
    - Sensitivity (ex. `pci`, `pii`)
 
+Topics will be added automatically when repositories are requested via the [self-service mechanism](#new-repository-creation-request). Internal wikis (ex. Confluence) and README.md documentation of templated repositories can view all repositories related to a given topic by using a specially crafted GitHub search URL: https://github.com/search?q=topic%3Agsi-aws&type=Repositories. In this way, application owners can easily reference the repositories associated with their application / GSI.
+
 ### Topic Management
 #### **Automation**
+   Key topics will be added upon repository creation as per above. 
+
    Only repository owners can add topics. By leveraging [IssueOps](https://issue-ops.github.io/docs/), [IssueForms](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository#creating-issue-forms), and [Organization Webhooks](https://docs.github.com/en/webhooks/types-of-webhooks#organization-webhooks) for [Issues](https://docs.github.com/en/webhooks/webhook-events-and-payloads#issues), members of the repository admin group can be allowed to trigger automation to create topics within a repository. Note that this elevated permission would require [special handling](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/making-authenticated-api-requests-with-a-github-app-in-a-github-actions-workflow) as it is an authenticated API request ([`gh repo edit --add-topic`](https://cli.github.com/manual/gh_repo_edit)).
 
 #### **Documentation**
@@ -51,15 +65,7 @@ Repository [topics](https://docs.github.com/en/repositories/managing-your-reposi
       - Written in [go](https://github.com/search?q=topic%3Ago&type=Repositories)
       - Dealing with [containers](https://github.com/search?q=topic%3Acontainers&type=Repositories)
       - Part of [cncf](https://github.com/search?q=topic%3Acncf&type=Repositories)
-
-# Key Decisions and Recommendations
-
-| Decision ID | Decision Description | Rationale / Justification |
-| --- | --- | --- |
-| 1 | Use lowercase with hyphens for team names | Improves readability and consistency across the organization |
-| 2 | Use repository topics for grouping | Enables efficient repository discovery and management |
-| 3 | Create and enforce team naming standards | Ensures consistency and clarity in team organization |
-| 5 | Implement topic automation | Allows for self-service while maintaining least privilege |
+      - Part of [gsi-aws](https://github.com/search?q=topic%gsi-aws&type=Repositories)
 
 # References and Additional Reading
 
