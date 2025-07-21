@@ -12,4 +12,4 @@ Documents without links are in progress and not yet published.
 
 - [GitHub Organization Design](organization-design.html)
 - [Branching Strategies](branching-strategies.html)
-- [Deployment Diagram](deployment.html)
+- [Deployment Diagram](deployment.html) - [Flowchart](deployment-flow.md)

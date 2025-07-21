@@ -7,13 +7,7 @@ Documents without links are in progress and not yet published.
 
 - [GitHub Organization Design](organization-design.md)
 - [Branching Strategies](branching-strategies.md)
-- Runner Strategy
-- Golden Paths
-- Golden Bricks
-- Continuous Deployment - Applications
-- Continouos Deployment - Infrastructure
-- Release Management
-- Issue Ops
+- [Deployment Diagram](deployment.md)
 
 ## GitHub Pages Publication
 
