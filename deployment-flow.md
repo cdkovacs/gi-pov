@@ -12,8 +12,8 @@ flowchart TD
     E --> F{Tests Pass?}
     F -->|No| G[Fail Pipeline]
     F -->|Yes| H[Create Snapshot Build]
-    H --> I[Upload to Nonprod Artifact Repo]
-    I --> J[Create Ephemeral Environment]
+    H --> I[Upload to Nexus Nonprod Repo]
+    I --> J[Create Ephemeral Namespace]
     J --> K[Deploy to Ephemeral Environment]
     K --> L[Start Application]
     L --> M[Run Automated Tests]
@@ -26,13 +26,13 @@ flowchart TD
     S -->|No| T[Make Changes & Update PR]
     T --> B
     S -->|Yes| U[Merge Pull Request]
-    U --> V[Cleanup: Delete Ephemeral Environment]
+    U --> V[Cleanup: Delete Ephemeral Namespace]
     V --> W[Cleanup: Delete Snapshot Build]
     
-    style A fill:#e1f5fe
-    style U fill:#c8e6c9
-    style G fill:#ffcdd2
-    style O fill:#ffcdd2
+    style A fill:#e1f5fe,color:#000000
+    style U fill:#c8e6c9,color:#000000
+    style G fill:#ffcdd2,color:#000000
+    style O fill:#ffcdd2,color:#000000
 ```
 
 ## Nonprod Promotion Flow
@@ -61,11 +61,11 @@ flowchart TD
     T --> U[UAT Environment Ready]
     U --> V[Developer Reviews UAT]
     
-    style A fill:#e1f5fe
-    style K fill:#fff3e0
-    style U fill:#fff3e0
-    style G fill:#ffcdd2
-    style R fill:#ffcdd2
+    style A fill:#e1f5fe,color:#000000
+    style K fill:#fff3e0,color:#000000
+    style U fill:#fff3e0,color:#000000
+    style G fill:#ffcdd2,color:#000000
+    style R fill:#ffcdd2,color:#000000
 ```
 
 ## Production Promotion Flow
@@ -85,11 +85,11 @@ flowchart TD
     K -->|No| L[Rollback Procedure]
     K -->|Yes| M[Production Release Complete]
     
-    style A fill:#e1f5fe
-    style I fill:#c8e6c9
-    style M fill:#c8e6c9
-    style E fill:#ffcdd2
-    style L fill:#ffcdd2
+    style A fill:#e1f5fe,color:#000000
+    style I fill:#c8e6c9,color:#000000
+    style M fill:#c8e6c9,color:#000000
+    style E fill:#ffcdd2,color:#000000
+    style L fill:#ffcdd2,color:#000000
 ```
 
 ## Complete Pipeline Overview
@@ -113,18 +113,18 @@ flowchart LR
     C -->|Merge PR| D
     F -->|Approval Required| G
     
-    style A fill:#e1f5fe
-    style C fill:#fff3e0
-    style E fill:#fff3e0
-    style F fill:#fff3e0
-    style G fill:#c8e6c9
+    style A fill:#e1f5fe,color:#000000
+    style C fill:#fff3e0,color:#000000
+    style E fill:#fff3e0,color:#000000
+    style F fill:#fff3e0,color:#000000
+    style G fill:#c8e6c9,color:#000000
 ```
 
 ## Environment Lifecycle
 
 ```mermaid
 flowchart TD
-    A[PR Created] --> B[Ephemeral Environment Created]
+    A[PR Created] --> B[Ephemeral Namespace Created]
     B --> C[Application Deployed]
     C --> D[Tests Executed]
     D --> E[Environment Available for Review]
@@ -133,11 +133,11 @@ flowchart TD
     G --> C
     F -->|Merged| H[Cleanup Ephemeral Environment]
     F -->|Closed| H
-    H --> I[Environment Deleted]
+    H --> I[Namespace Deleted]
     I --> J[Artifacts Cleaned Up]
     
-    style A fill:#e1f5fe 
-    style E fill:#fff3e0
-    style H fill:#ffcdd2
-    style J fill:#f5f5f5
+    style A fill:#e1f5fe,color:#000000
+    style E fill:#fff3e0,color:#000000
+    style H fill:#ffcdd2,color:#000000
+    style J fill:#f5f5f5,color:#000000
 ```
